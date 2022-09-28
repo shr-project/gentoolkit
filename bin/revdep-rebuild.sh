@@ -327,6 +327,8 @@ setup_color() {
 		. /lib/gentoo/functions.sh
 	elif [ -e /etc/init.d/functions.sh ]; then
 		. /etc/init.d/functions.sh
+	elif [ -e ./functions.sh ]; then
+		. ./functions.sh
 	else
 		echo "Unable to find functions.sh"
 		exit 1
@@ -579,7 +581,7 @@ verify_tmpdir() {
 get_search_env() {
 	local new_env
 	local old_env
-	local uid=$(python -c 'import os; import pwd; print(pwd.getpwuid(os.getuid())[0])')
+	local uid=$(python3 -c 'import os; import pwd; print(pwd.getpwuid(os.getuid())[0])')
 	# Find a place to put temporary files
 	if [[ "$uid" == "root" ]]; then
 		local tmp_target="/var/cache/${APP_NAME}"
@@ -1092,7 +1094,7 @@ portage_settings() {
 	unset SEARCH_DIRS_MASK
 	unset LD_LIBRARY_MASK
 
-	eval $(portageq envvar -v PORTAGE_ROOT PORTAGE_NICENESS EMERGE_DEFAULT_OPTS NOCOLOR SEARCH_DIRS SEARCH_DIRS_MASK LD_LIBRARY_MASK REVDEP_REBUILD_DEFAULT_OPTS)
+	#eval $(portageq envvar -v PORTAGE_ROOT PORTAGE_NICENESS EMERGE_DEFAULT_OPTS NOCOLOR SEARCH_DIRS SEARCH_DIRS_MASK LD_LIBRARY_MASK REVDEP_REBUILD_DEFAULT_OPTS)
 	export NOCOLOR
 
 	# Convert quoted paths to array.
